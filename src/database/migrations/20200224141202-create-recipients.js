@@ -10,6 +10,7 @@ module.exports = {
       name: {
         type: Sequelize.STRING,
         allowNull: false,
+        unique: true,
       },
       address: {
         type: Sequelize.STRING,
@@ -21,7 +22,7 @@ module.exports = {
       },
       complement: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       state: {
         type: Sequelize.ENUM,
