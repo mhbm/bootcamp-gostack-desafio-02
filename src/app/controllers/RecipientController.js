@@ -23,13 +23,66 @@ class RecipientController {
     }
   }
 
-  async update(req, res) {}
+  async update(req, res) {
+    try {
+      const { id } = req.params;
 
-  async index(req, res) {}
+      console.log(req.body);
 
-  async show(req, res) {}
+      await Recipient.update(req.body, {
+        where: {
+          id,
+        },
+      });
 
-  async delete(req, res) {}
+      return res.status(200).json({
+        message: 'Recipient was updated.',
+      });
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json({
+        error: err,
+      });
+    }
+  }
+
+  async index(req, res) {
+    return res.status(200).json(await Recipient.findAll());
+  }
+
+  async show(req, res) {
+    const { id } = req.params;
+
+    const recipientExist = await Recipient.findByPk(id);
+
+    if (!recipientExist) {
+      return res.status(400).json({ error: 'Recipient does not exists.' });
+    }
+    return res.status(200).json(recipientExist);
+  }
+
+  async delete(req, res) {
+    try {
+      const recipientDelete = await Recipient.destroy({
+        where: {
+          name: req.body.name,
+        },
+      });
+
+      if (recipientDelete === 0) {
+        return res.status(400).json({
+          error: 'Recipient does not exist!',
+        });
+      }
+
+      return res.status(200).json({
+        message: 'Recipient deleted.',
+      });
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json(err);
+    }
+  }
 }
 
 export default new RecipientController();

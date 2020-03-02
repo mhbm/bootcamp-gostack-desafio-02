@@ -7,6 +7,10 @@ const routes = new Router();
 
 routes.get('/', SessionController.store);
 
-routes.post('/store', RecipientController.store);
+routes.post('/recipient/store', RecipientController.store);
+routes.delete('/recipient/delete', RecipientController.delete);
+routes.put('/recipient/update/:id', RecipientController.update);
+routes.get('/recipient/index', RecipientController.index);
+routes.get('/recipient/show/:id', RecipientController.show);
 
 export default routes;
